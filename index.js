@@ -32,6 +32,7 @@ process.on('unhandledRejection', (error, promise) => {
 
 if(process.env.ISSUER.indexOf("localhost") < 0) {
   configuration.clients[0].redirect_uris.push(`${process.env.ISSUER}/sendToAd`);
+  configuration.clients[0].redirect_uris.push(`${process.env.ADB2C_RETURN_URL}`);
   // configuration.cookies.long = {
   //   secure: true
   // },
@@ -39,7 +40,7 @@ if(process.env.ISSUER.indexOf("localhost") < 0) {
   //   secure: true
   // }  
 }
-console.log(configuration);
+console.log(configuration.redirect_uris);
 
 const app = express();
 
