@@ -21,6 +21,15 @@ const __dirname = dirname(import.meta.url);
 const { PORT = 3000, ISSUER = `http://localhost:${PORT}` } = process.env;
 configuration.findAccount = Account.findAccount;
 
+process.on('uncaughtException', (error) => {
+  console.log('Oh my god, something terrible happened: ', error);
+});
+
+process.on('unhandledRejection', (error, promise) => {
+  console.log(' Oh Lord! We forgot to handle a promise rejection here: ', promise);
+  console.log(' The error was: ', error);
+});
+
 if(process.env.ISSUER.indexOf("localhost") < 0) {
   configuration.clients[0].redirect_uris.push(`${process.env.ISSUER}/sendToAd`);
   configuration.cookies.long = {
