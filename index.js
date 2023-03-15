@@ -32,13 +32,14 @@ process.on('unhandledRejection', (error, promise) => {
 
 if(process.env.ISSUER.indexOf("localhost") < 0) {
   configuration.clients[0].redirect_uris.push(`${process.env.ISSUER}/sendToAd`);
-  configuration.cookies.long = {
-    secure: true
-  },
-  configuration.cookies.short = {
-    secure: true
-  }  
+  // configuration.cookies.long = {
+  //   secure: true
+  // },
+  // configuration.cookies.short = {
+  //   secure: true
+  // }  
 }
+console.log(configuration);
 
 const app = express();
 
