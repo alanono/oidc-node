@@ -23,6 +23,12 @@ configuration.findAccount = Account.findAccount;
 
 if(process.env.ISSUER.indexOf("localhost") < 0) {
   configuration.clients[0].redirect_uris.push(`${process.env.ISSUER}/sendToAd`);
+  configuration.cookies.long = {
+    secure: true
+  },
+  configuration.cookies.short = {
+    secure: true
+  }  
 }
 
 const app = express();
