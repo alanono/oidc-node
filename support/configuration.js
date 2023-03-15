@@ -2,7 +2,7 @@ export default {
   clients: [
     {
        client_id: '827231e9-9e10-4cd9-9b70-0886687023de',
-       client_secret: '...',
+       client_secret: '66546A576E5A7234753778214125442A472D4B6150645367556B587032733576',
        response_types: ["code", "id_token"],
        grant_types: ["authorization_code", "implicit"],
        redirect_uris: ["https://jwt.ms"],
