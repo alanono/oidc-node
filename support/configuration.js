@@ -5,7 +5,7 @@ export default {
        client_secret: '66546A576E5A7234753778214125442A472D4B6150645367556B587032733576',
        response_types: ["code", "id_token"],
        grant_types: ["authorization_code", "implicit"],
-       redirect_uris: ["https://jwt.ms"],
+       redirect_uris: ["https://jwt.ms", "https://openidconnect.net/callback"],
      }
   ],
   interactions: {
@@ -17,17 +17,34 @@ export default {
     keys: ['some secret key', 'and also the old rotated away some time ago', 'and one more'],
   },
   claims: {
-    address: ['address'],
-    email: ['email', 'email_verified'],
-    phone: ['phone_number', 'phone_number_verified'],
-    profile: ['birthdate', 'family_name', 'gender', 'given_name', 'locale', 'middle_name', 'name',
-      'nickname', 'picture', 'preferred_username', 'profile', 'updated_at', 'website', 'zoneinfo'],
+    openid: ["sub", "email", "oid", "given_name", "name", "family_name"],
+    address: ["address"],
+    email: ["email", "email_verified"],
+    phone: ["phone_number", "phone_number_verified"],
+    profile: [
+      "birthdate",
+      "family_name",
+      "gender",
+      "given_name",
+      "locale",
+      "middle_name",
+      "name",
+      "nickname",
+      "picture",
+      "preferred_username",
+      "profile",
+      "updated_at",
+      "website",
+      "zoneinfo",
+    ],
   },
   features: {
-    devInteractions: { enabled: false }, // defaults to true
-
+    devInteractions: { enabled: false }, // defaults to tru
     deviceFlow: { enabled: true }, // defaults to false
     revocation: { enabled: true }, // defaults to false
+    claimsParameter: { enabled: true }, // defaults to false
+    jwtUserinfo: { enabled: true }, // defaults to false
+    resourceIndicators: { enabled: false },
   },
   jwks: {
     keys: [
@@ -54,6 +71,13 @@ export default {
   },
   pkce: {
     required: () => false
-  }
+  },
+  extraTokenClaims: async (ctx, token) => {
+    console.log("extraTokenClaims", token);
+    return findAccount(ctx, token.accountId).then((account) => {
+      console.log("extraTokenClaims", token);
+      return account.claims();
+    });
+  },
 
 };

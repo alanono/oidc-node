@@ -123,15 +123,21 @@ class Account {
       };
 
       resp.claims = (use, scope) => {
+        console.log("scope", scope);
         return {
           profile: {...resp },
-          openId: {
+          openid: {
             sub: user.username,
+            email: user.email,
+            oid: user.email,
+            name: user.name,
+            family_name: user.lastName,
+            given_name: user.name,
           },
           email: {
             email: user.email,
             email_verified: user.email,
-          }
+          },
         }
       }
 

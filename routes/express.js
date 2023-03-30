@@ -4,7 +4,7 @@ import * as querystring from 'node:querystring';
 import { inspect } from 'node:util';
 
 import isEmpty from 'lodash/isEmpty.js';
-import { urlencoded } from 'express'; // eslint-disable-line import/no-unresolved
+import { query, urlencoded } from 'express'; // eslint-disable-line import/no-unresolved
 
 import Account from '../support/account.js';
 import fetch from 'node-fetch';
@@ -193,6 +193,9 @@ export default (app, provider) => {
       let endurl = encodeURIComponent(`${process.env.ISSUER}/sendToAd`);
       if(req.query.debug) {
         endurl = encodeURIComponent(`https://jwt.ms`);
+      }
+      if(req.query.debug && req.query.debug == 'openid') {
+        endurl = encodeURIComponent(`https://openidconnect.net/callback`);
       }
 
       res.redirect(`/auth?client_id=827231e9-9e10-4cd9-9b70-0886687023de&response_type=id_token&redirect_uri=${endurl}&state=${username}&scope=openid+email+profile&nonce=12`);
